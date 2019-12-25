@@ -1,10 +1,13 @@
-const oauth = require('../../helper/oauth')
+const _ = require('lodash');
+const oauth = require('../../helper/oauth');
+const config = require('../../../config');
+const db = require('../db/shop.db');
 module.exports = {
     appGetLogin: (req, res) => {
         let url = oauth.appBuildUrlLogin();
         res.redirect(url);
     },
-    appInstallLogin: (req, res) => {
+    appInstallLogin: async (req, res) => {
         let code = req.body.code;
         if (!code) {
             return res.send('Code not found in request');
@@ -44,7 +47,7 @@ module.exports = {
             return res.send('You are not authorized to access this page!').status(401);
         }
     },
-    appGetAccessToken: (req, res) => {
+    appGetAccessToken: async (req, res) => {
         let code = req.body.code;
         try {
             if (!code) return res.send('Code not found in request');
@@ -59,14 +62,26 @@ module.exports = {
                 expires_in: param_token.expires_in
             };
 
-            // authorizeInfo can save to database shop for reuse later
-
-            //test request shop.json
-            let shopData = await oauth.appGetShop(authorizeInfo.access_token);
-            res.send(shopData);
-
-            //if have use webhook, you need subscribe webhook with org token to use
-            // await subscribe(authorizeInfo.access_token);
+            let data = await oauth.appGetShop(authorizeInfo.access_token);
+            let shopData = data.shop;
+            let dbShop = {
+                shop_domain: shopData.myharavan_domain,
+                shop_email: shopData.email,
+                shop_province: shopData.province,
+                access_token: param_token.access_token || '',
+                refresh_token: param_token.refresh_token || '',
+                list_notify: []
+            }
+            let shop = await db.dbFindOneShop(shopData.myharavan_domain).then(r => r);
+            if(shop){
+                res.redirect(config.app_url)
+            }else{
+                db.dbAddOneShop(dbShop).then(dt => {
+                    res.redirect(config.app_url)
+                }).catch(err => {
+                    res.send(err)
+                })
+            }
         } catch (err) {
             return res.send(err);
         }

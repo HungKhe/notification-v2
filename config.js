@@ -6,6 +6,7 @@ module.exports = {
     redirect_url_install: 'http://localhost:8888/api/grandservice',
     login_callback_url: 'http://localhost:8888/api/login',
     install_callback_url: 'http://localhost:8888/api/grandservice',
+    app_url: 'http://localhost:3000/',
     webhook: {
         hrVerifyToken: 'A9CmqLD8q9DPvX5Zw3PyXfhgyMYwz6dnsqSq2dL',  
         subscribe: 'https://webhook.haravan.com/api/subscribe'
@@ -19,7 +20,7 @@ module.exports = {
     app_id: '334f783d747a8fb31cf3c93a841d4778',
     app_secret: 'b3ddfa1e6e07416cc3ec0e18f91e0164de9603362bee62a0289554a8de7dd1e5',
     scope_login: 'openid profile email org userinfo',
-    scope: 'offline_access openid profile email org userinfo com.read_products wh_api grant_service',
+    scope: 'offline_access openid profile email org userinfo wh_api grant_service web.write_themes web.read_themes web.write_script_tags web.read_script_tags com.write_products com.read_products',
 }
 
 //https://randomkeygen.com/

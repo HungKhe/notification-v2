@@ -50,7 +50,6 @@ module.exports = {
                         console.log('error', err);
                         resolve();
                     } else {
-                        console.log('param_token', param_token);
                         resolve(param_token)
                     }
                 });
@@ -95,7 +94,6 @@ module.exports = {
 
             request(options, function (error, response, body) {
                 if (error) throw new Error(error);
-                console.log(body);
                 resolve(body)
             });
         })

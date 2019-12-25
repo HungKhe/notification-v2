@@ -2,11 +2,12 @@ const db = require('./model');
 const schema = {
     shop_domain: String,
     shop_email: String,
+    shop_province: String,
     access_token: String,
     refresh_token: String,
     list_notify: [
         {
-            _id: { type: mongoose.Schema.ObjectId, auto: true },
+            _id: { type: db.Schema.ObjectId, auto: true },
             notifyName : String,
             notifyType : String,
             notifyIcon : String,
