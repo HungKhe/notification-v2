@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../../config');
-const oauthCtrl = require('../controller/install/oauth.ctrl')
+const oauthCtrl = require('../controller/install/oauth.ctrl');
+const uploadCtrl = require('../controller/upload/upload.ctrl');
 const webhook = require('../helper/webhook');
 
 router.route('/webhooks')
@@ -21,5 +22,8 @@ router.route('/login')
 
 router.route('/grandservice')
     .post(oauthCtrl.appGetAccessToken)
+
+router.route('/upload')
+    .post(uploadCtrl.initUploadImage)
 
 module.exports = router;

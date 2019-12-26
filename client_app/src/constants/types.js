@@ -1,0 +1,4 @@
+/* Upload */
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const UPLOAD_IMAGE_SUCCESS = 'UPLOAD_IMAGE_SUCCESS';
+export const UPLOAD_IMAGE_FAIL = 'UPLOAD_IMAGE_FAIL';
